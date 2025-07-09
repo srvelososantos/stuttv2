@@ -5,6 +5,7 @@ import { UserModule } from './user/user.module';
 import { BookModule } from './book/book.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [ 
@@ -22,7 +23,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       logging: false,
       migrations: [__dirname + 'database/migrations/*{.js,.ts}'],
-    })
+    }), AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

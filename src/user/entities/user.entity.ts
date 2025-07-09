@@ -1,5 +1,7 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm";
+import { Book } from "src/book/entities/book.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -19,4 +21,9 @@ export class User {
 
     @Column({ default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date
+
+    @OneToMany(() => Book, (book) => book.user)
+    books: Book[];
+
+
 }

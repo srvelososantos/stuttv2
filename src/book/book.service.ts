@@ -25,8 +25,9 @@ export class BookService {
     return { message: 'Pdf salvo com sucesso', id: pdf.id }
   }
 
-  findAll() {
-    return `This action returns all book`;
+  findAll(user: any) {
+    //return this.booksRepo.find({where: {user: user.id}})
+    return user
   }
 
   findOne(id: number) {

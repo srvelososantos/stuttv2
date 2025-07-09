@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -15,16 +16,24 @@ export class UserService {
   ) { }
 
   async create(createUserDto: CreateUserDto) {
+
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
     try{
       const user = this.usersRepo.create({
-        ...createUserDto
+        ...createUserDto,
+        password: hashedPassword
       });
 
       await this.usersRepo.save(user)
       return user;
     }catch(e){
-      throw new HttpException('Nao foi possivel criar o usuario', HttpStatus.BAD_REQUEST)
+      throw new HttpException('Nao foi possivel criar o usuario: ' + e, HttpStatus.BAD_REQUEST)
     }
+  }
+
+  async findOne(mail: string){
+    return await this.usersRepo.findOne({ where: { email: mail } })
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

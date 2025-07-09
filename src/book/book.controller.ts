@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Req, UseGuards } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard)
 @Controller('book')
 export class BookController {
   constructor(private readonly bookService: BookService) {}
@@ -14,9 +16,9 @@ export class BookController {
     return this.bookService.createPdf(file)
   }
 
-  @Get()
-  findAll() {
-    return this.bookService.findAll();
+  @Get('mybooks')
+  findAll(@Req() req: any) {
+    return this.bookService.findAll(req.user);
   }
 
   @Get(':id')
