@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class BookService {
-
+  
   constructor(
     @InjectRepository(Book)
     private readonly booksRepo: Repository<Book>
@@ -29,12 +29,12 @@ export class BookService {
     //return this.booksRepo.find({where: {user: user.id}})
     return user
   }
-
+  
   findOne(id: number) {
     return `This action returns a #${id} book`;
   }
 
-  update(id: number, updateBookDto: UpdateBookDto) {
+  update(id: number) {
     return `This action updates a #${id} book`;
   }
 
