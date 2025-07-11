@@ -3,7 +3,8 @@ import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from 'src/auth/auth.guard';
+//import { AuthGuard } from '@nestjs/passport';
 
 @UseGuards(AuthGuard)
 @Controller('book')

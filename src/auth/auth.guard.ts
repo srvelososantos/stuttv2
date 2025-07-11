@@ -9,7 +9,7 @@ export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
 
   canActivate( context: ExecutionContext, ): boolean | Promise<boolean> | Observable<boolean> {
-    const request = context.switchToHttp().getRequest<Request>();
+    const request = context.switchToHttp().getRequest();
 
     const authorization = this.extractTokenFromHeader(request)
     if(!authorization) throw new UnauthorizedException('token is required')
