@@ -3,7 +3,7 @@ import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @UseGuards(AuthGuard)
 @Controller('book')
@@ -12,8 +12,8 @@ export class BookController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  create(@UploadedFile() file: Express.Multer.File) {
-    return this.bookService.createPdf(file)
+  create(@UploadedFile() file: Express.Multer.File, @Req() req: any) {
+    return this.bookService.createPdf(file, req)
   }
 
   @Get('mybooks')
