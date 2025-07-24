@@ -4,6 +4,10 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/auth/auth.guard';
+<<<<<<< HEAD
+=======
+//import { AuthGuard } from '@nestjs/passport';
+>>>>>>> 664d79211ff07f17afe2b635ab004f4d6cb6f746
 
 @UseGuards(AuthGuard)
 @Controller('book')
