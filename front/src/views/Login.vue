@@ -51,6 +51,7 @@ const login = async () => {
     })
 
     console.log('Login bem-sucedido:', response.data)
+    localStorage.setItem('isLoggedIn', 'true')
     router.push('/home') // redireciona
   } catch (err) {
     if (err.response && err.response.status === 401) {
