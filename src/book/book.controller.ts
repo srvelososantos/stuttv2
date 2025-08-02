@@ -19,6 +19,7 @@ export class BookController {
   @Get('mybooks')
   findAll(@Req() req: any) {
     return this.bookService.findAll(req.user);
+    
   }
 
   @Get(':id')

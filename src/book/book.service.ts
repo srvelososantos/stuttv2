@@ -30,6 +30,7 @@ export class BookService {
         title: file.originalname,
         author: 'Unknown',
         user: usr,
+        progress: 0,
       })
 
       await this.booksRepo.save(pdf)
@@ -39,9 +40,22 @@ export class BookService {
     }
   }
 
-  findAll(user: any) {
-    //return this.booksRepo.find({where: {user: user.id}})
-    return user
+  async findAll(user: any) {
+    return await this.booksRepo.find({ 
+      where: {user: user.id}, 
+      select: {
+        id: true,
+        title: true,
+        author: true,
+        voice: true,
+        uploadedAt: true,
+        filename: true,
+        progress: true,
+        user: true,
+
+      // adicione os campos que deseja retornar
+    } })
+
   }
   
   findOne(id: number) {
