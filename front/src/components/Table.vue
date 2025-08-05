@@ -7,7 +7,6 @@
                     <th>Title</th>
                     <th>Status</th>
                     <th>Author</th>
-                    <th>Progress</th>
                     <th>Voice</th>
                 </tr>
             </thead>
@@ -44,12 +43,15 @@ const props = defineProps({
 
 <style>
 .table-container {
-  width: 100%;
+  width: 100vw;
   margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .pdf-table {
-  width: 100%;
+  width: 75%;
+  margin-right: 1rem;
   border-collapse: collapse;
 }
 

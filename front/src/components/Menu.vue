@@ -28,8 +28,8 @@ export default {
         icon: "home",
       },
       {
-        label: "Dashboard",
-        icon: "dashboard",
+        label: "New File",
+        icon: "upload_file",
         // children: [
         //   {
         //     label: "level 2.1",
@@ -62,6 +62,9 @@ export default {
       if (label === 'LogOut') {
         localStorage.removeItem('token')        // 🔐 Remove token JWT
         router.push('/login')                   // 🔁 Redireciona
+      }
+      if(label === 'New File'){
+        console.log('teste')
       }
     }
 
