@@ -50,9 +50,14 @@ const login = async () => {
       password: password.value
     })
 
-    console.log('Login bem-sucedido:', response.data)
-    localStorage.setItem('isLoggedIn', 'true')
-    router.push('/home') // redireciona
+    const token = response.data.access_token
+
+    if (token) {
+      localStorage.setItem('token', token)     // Salva o token JWT
+      router.push('/home')                     // Redireciona para a página protegida
+    } else {
+      alert('Erro: token não recebido.')
+    }
   } catch (err) {
     if (err.response && err.response.status === 401) {
       alert("Email ou senha incorretos")

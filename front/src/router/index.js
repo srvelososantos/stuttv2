@@ -21,7 +21,8 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
+  const token = localStorage.getItem('token')
+  const isLoggedIn = !!token
 
   if (to.meta.requiresAuth && !isLoggedIn) {
     return next('/login')

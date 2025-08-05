@@ -4,7 +4,7 @@
     
     <Menu />
 
-    <Table />
+    <Table :pdfs="pdfs"/>
 
   </div>
 
@@ -20,8 +20,13 @@ import Table from '@/components/Table.vue'
 const pdfs = ref([])
 
 onMounted(async () => {
+
+  const token = localStorage.getItem('token')
   try {
-    const response = await axios.get('http://localhost:3000/book/mybooks')
+    const response = await axios.get('http://localhost:3000/book/mybooks',{ 
+    headers: {
+      Authorization: `Bearer ${token}`
+    }})
     pdfs.value = response.data
   } catch (error) {
     console.error('Erro ao buscar PDFs:', error)

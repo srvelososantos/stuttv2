@@ -8,6 +8,7 @@
       :icon="item.icon"
       :depth="0"
       :smallMenu="smallMenu"
+      @menu-click="handleMenuClick"
     />
     <!-- <i @click="smallMenu = !smallMenu" class="material-icons">menu</i> -->
   </div>
@@ -15,6 +16,7 @@
 
 <script>
 import MenuItem from './MenuItem.vue';
+import { useRouter } from 'vue-router'
 
 export default {
   name: 'recursive-menu',
@@ -24,48 +26,48 @@ export default {
       {
         label: "Home",
         icon: "home",
-        children: [
-          {
-            label: "level 1.1",
-            children: [
-              {
-                label: "level 1.1.1",
-                children: [
-                  {
-                    label: "level 1.1.1.1"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            label: "level 1.2"
-          }
-        ]
       },
       {
         label: "Dashboard",
         icon: "dashboard",
-        children: [
-          {
-            label: "level 2.1",
-          },
-          {
-            label: "level 2.2"
-          },
-          {
-            label: "level 2.3"
-          }
-        ]
+        // children: [
+        //   {
+        //     label: "level 2.1",
+        //   },
+        //   {
+        //     label: "level 2.2"
+        //   },
+        //   {
+        //     label: "level 2.3"
+        //   }
+        // ]
       },
       {
         label: "Settings",
         icon: "settings"
+      },
+      {
+        label: "LogOut",
+        icon: "logout",
       }
     ]
   }),
   components: {
     MenuItem
+  },
+  setup() {
+    const router = useRouter()
+
+    const handleMenuClick = (label) => {
+      if (label === 'LogOut') {
+        localStorage.removeItem('token')        // 🔐 Remove token JWT
+        router.push('/login')                   // 🔁 Redireciona
+      }
+    }
+
+    return {
+      handleMenuClick
+    }
   }
 }
 </script>

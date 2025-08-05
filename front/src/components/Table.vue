@@ -33,7 +33,7 @@
 import { defineProps } from 'vue'
 
 const props = defineProps({
-    pdfs: {
+  pdfs: {
     type: Array,
     required: true,
     default: () => []
