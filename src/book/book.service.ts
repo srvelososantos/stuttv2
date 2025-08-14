@@ -18,9 +18,10 @@ export class BookService {
 
   ){  }
 
-  async createPdf(file: Express.Multer.File, req) {
-
+  async createPdf(file: Express.Multer.File, req: any) {
+    console.log(req.sub)
     const usr = await this.usersRepo.findOne({where: { id: req.sub }})
+    
     if(!usr) throw new HttpException('user not found', HttpStatus.NOT_FOUND)
 
     try{
@@ -41,8 +42,10 @@ export class BookService {
   }
 
   async findAll(user: any) {
-    return await this.booksRepo.find({ 
-      where: {user: user.id}, 
+    console.log(user.sub)
+
+    return await this.booksRepo.find({
+      where: {user: { id: user.sub }}, 
       select: {
         id: true,
         title: true,
@@ -52,14 +55,12 @@ export class BookService {
         filename: true,
         progress: true,
         user: true,
-
-      // adicione os campos que deseja retornar
-    } })
-
+      } 
+    })
   }
   
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  async findOne(id: number) {
+    return await this.booksRepo.findOne({where: { id: id }})
   }
 
   update(id: number) {

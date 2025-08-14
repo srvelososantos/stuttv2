@@ -1,5 +1,5 @@
 <template>
-  <div class="menu-item" :class="{ opened: expanded }">
+  <div class="menu-item" :class="{ opened: expanded }" @click="handleClick">
     <div
       class="label"
       @click="toggleMenu()"
@@ -63,6 +63,13 @@ export default {
     showLabel() {
       return this.smallMenu ? this.depth > 0 : true;
     }
+  },
+  emits: [ 'menu-click' ],
+  setup(props, { emit }){
+    const handleClick = () => {
+      emit('menu-click', props.label)
+    }
+    return { handleClick }
   },
   methods: {
     toggleMenu() {

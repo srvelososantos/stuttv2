@@ -18,6 +18,8 @@
 import MenuItem from './MenuItem.vue';
 import { useRouter } from 'vue-router'
 
+import axios from 'axios'
+
 export default {
   name: 'recursive-menu',
   data: () => ({
@@ -47,8 +49,12 @@ export default {
         icon: "settings"
       },
       {
-        label: "LogOut",
+        label: "Log Out",
         icon: "logout",
+      },
+      {
+        label: "New File",
+        icon: "upload_file",
       }
     ]
   }),
@@ -59,9 +65,44 @@ export default {
     const router = useRouter()
 
     const handleMenuClick = (label) => {
-      if (label === 'LogOut') {
-        localStorage.removeItem('token')        // 🔐 Remove token JWT
-        router.push('/login')                   // 🔁 Redireciona
+      if (label === 'Log Out') {
+        localStorage.removeItem('token')        // Remove token JWT
+        router.push('/login')                   // Redireciona
+      }
+      if(label === 'New File'){
+        const input = document.createElement('input')
+        input.type = 'file'
+        input.accept = 'application/pdf' // apenas PDFs
+        input.onchange = async (event) => {
+          const file = event.target.files[0]
+          if (file) {
+            try {
+              const formData = new FormData()
+              formData.append('file', file)
+
+              const res = await axios.post('http://localhost:3000/book/upload', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+              })
+
+              console.log('Upload concluído', res.data)
+              alert('Upload concluído com sucesso!')
+              window.location.reload()
+            } catch (err) {
+              console.error('Erro no upload', err)
+              alert('Erro ao enviar o arquivo')
+            }
+          }
+        }
+        input.click()
+      }
+      if(label === 'Settings'){
+        router.push('/settings')
+      }
+      if(label === 'Home'){
+        router.push('/home')
       }
     }
 

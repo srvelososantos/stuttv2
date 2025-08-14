@@ -13,7 +13,7 @@ export class BookController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   create(@UploadedFile() file: Express.Multer.File, @Req() req: any) {
-    return this.bookService.createPdf(file, req)
+    return this.bookService.createPdf(file, req.user)
   }
 
   @Get('mybooks')

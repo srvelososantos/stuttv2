@@ -12,6 +12,10 @@ export class AuthController{
         return this.authService.login(user);
     }
 
-    
+    @UseGuards(AuthGuard)
+    @Get('validate-token')
+    validateToken(){
+        return { valid: true }
+    }
 
 }
