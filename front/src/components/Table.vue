@@ -1,23 +1,25 @@
 <template>
-  <div class="table-container">
-    <table class="pdf-table" v-if="pdfs.length > 0">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Status</th>
-          <th>Author</th>
-          <th>Voice</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="pdf in pdfs" :key="pdf.id" @click="abrirPdf(pdf.id)">
-          <td>{{ pdf.title }}</td>
-          <td>{{ pdf.progress }} %</td>
-          <td>{{ pdf.author }}</td>
-          <td>{{ pdf.voice }}</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <div class="table-container">
+        <table class="pdf-table" v-if="pdfs.length > 0">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Author</th>
+                    <th>Progress</th>
+                    <th>Voice</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="pdf in pdfs" :key="pdf.id">
+                    <td>{{ pdf.title }}</td>
+                    <td>{{ pdf.status }}</td>
+                    <td>{{ pdf.author }}</td>
+                    <td>{{ pdf.voice }}</td>
+                </tr>
+            </tbody>
+        </table>
 
     <div v-else class="sem-dados">
       Nenhum PDF enviado ainda.
@@ -48,14 +50,12 @@ const props = defineProps({
 
 <style>
 .table-container {
-  width: 100%;
+  width: 100vw;
   margin-top: 2rem;
-  justify-content: flex-end;
-  display: flex;
 }
 
 .pdf-table {
-  width: 80%;
+  width: 100%;
   border-collapse: collapse;
 }
 
