@@ -25,8 +25,8 @@ export class Book {
     @Column()
     filename: string
 
-    @Column({ type: 'bytea' })
-    data: Buffer
+    @Column()
+    key: string
 
     @Column()
     progress: number

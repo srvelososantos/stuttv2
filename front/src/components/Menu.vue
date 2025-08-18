@@ -52,10 +52,7 @@ export default {
         label: "Log Out",
         icon: "logout",
       },
-      {
-        label: "New File",
-        icon: "upload_file",
-      }
+      
     ]
   }),
   components: {
@@ -87,7 +84,7 @@ export default {
                 }
               })
 
-              console.log('Upload concluído', res.data)
+              console.log('Arquivo enviado com chave:', res.data.key);
               alert('Upload concluído com sucesso!')
               window.location.reload()
             } catch (err) {
@@ -104,9 +101,8 @@ export default {
       if(label === 'Home'){
         router.push('/home')
       }
-      if(label === 'New File'){
-        console.log('teste')
-      }
+      
+      
     }
 
     return {

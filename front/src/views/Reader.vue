@@ -1,26 +1,29 @@
 <script setup>
-import { defineProps, ref, onMounted } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRoute } from 'vue-router';
 
-
-const props = defineProps({
-  id: String
-})
-
-const pdfUrl = ref(null)
+const route = useRoute();
+const pdfUrl = ref('');
 
 onMounted(async () => {
-    const token = localStorage.getItem('token')
-    console.log('token' + token)
-    const res = await axios.get(`http://localhost:3000/book/${props.id}`, { responseType: 'blob' }, 
-    {   headers: {
-            Authorization: `Bearer ${token}`
-        } 
-    })
-//   pdfUrl.value = URL.createObjectURL(res.data)
-})
+  const key = route.query.key;
+  if (!key) return;
+  const token = localStorage.getItem('token')
+
+  try {
+    const response = await axios.get(`http://localhost:3000/book/read?key=${key}`, { 
+    headers: {
+      Authorization: `Bearer ${token}`
+    }});
+
+    pdfUrl.value = response.data.url;
+  } catch (err) {
+    console.error('Erro ao carregar PDF', err);
+  }
+});
 </script>
 
 <template>
-  <!-- <iframe v-if="pdfUrl" :src="pdfUrl" width="100%" height="600px"></iframe> -->
+  <iframe v-if="pdfUrl" :src="pdfUrl" width="100%" height="600px"></iframe>
 </template>

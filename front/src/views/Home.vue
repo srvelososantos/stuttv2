@@ -28,6 +28,7 @@ onMounted(async () => {
       Authorization: `Bearer ${token}`
     }})
     pdfs.value = response.data
+    
   } catch (error) {
     console.error('Erro ao buscar PDFs:', error)
   }

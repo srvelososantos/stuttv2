@@ -5,6 +5,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from './entities/book.entity';
 import { Repository } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
+import { ConfigService } from '@nestjs/config';
+import { S3Service } from '../s3/s3.service'
 
 @Injectable()
 export class BookService {
@@ -14,7 +16,11 @@ export class BookService {
     private readonly booksRepo: Repository<Book>,
 
     @InjectRepository(User)
-    private readonly usersRepo: Repository<User>
+    private readonly usersRepo: Repository<User>,
+
+    private config: ConfigService,
+
+    private s3service: S3Service
 
   ){  }
 
@@ -24,10 +30,12 @@ export class BookService {
     
     if(!usr) throw new HttpException('user not found', HttpStatus.NOT_FOUND)
 
+    const key = await this.s3service.uploadFile(file)
+
     try{
       const pdf = await this.booksRepo.create({
         filename: file.originalname,
-        data: file.buffer,
+        key: key,
         title: file.originalname,
         author: 'Unknown',
         user: usr,
@@ -43,7 +51,7 @@ export class BookService {
 
   async findAll(user: any) {
     console.log(user.sub)
-
+    //console.log(this.config.get('JWT_SECRET'))
     return await this.booksRepo.find({
       where: {user: { id: user.sub }}, 
       select: {
@@ -59,8 +67,8 @@ export class BookService {
     })
   }
   
-  async findOne(id: number) {
-    return await this.booksRepo.findOne({where: { id: id }})
+  async findOne(key: number) {
+    return await this.booksRepo.findOne({where: { id: key }})
   }
 
   update(id: number) {

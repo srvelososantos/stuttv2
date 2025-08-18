@@ -15,7 +15,7 @@ const routes = [
   { path: '/home', name: 'home', component: HomePage, meta: { requiresAuth: true } },
   { path: '/settings', name: 'settings', component: Settings, meta: { requiresAuth: true } },
   { path: '/player', name: 'player', component: Player, meta: { requiresAuth: true } },
-  { path: '/reader/:id', name: 'reader', component: Reader, meta: { requiresAuth: true }, props: true }
+  { path: '/reader', name: 'reader', component: Reader, meta: { requiresAuth: true }, props: true }
 ]
 
 export const router = createRouter({

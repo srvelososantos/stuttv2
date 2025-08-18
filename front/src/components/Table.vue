@@ -5,16 +5,15 @@
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Status</th>
-                    <th>Author</th>
                     <th>Progress</th>
+                    <th>Author</th>
                     <th>Voice</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="pdf in pdfs" :key="pdf.id">
+                <tr v-for="pdf in pdfs" :key="pdf.id" @click="abrirPdf(pdf)">
                     <td>{{ pdf.title }}</td>
-                    <td>{{ pdf.status }}</td>
+                    <td>{{ pdf.progress }} %</td>
                     <td>{{ pdf.author }}</td>
                     <td>{{ pdf.voice }}</td>
                 </tr>
@@ -39,11 +38,13 @@ const props = defineProps({
     type: Array,
     required: true,
     default: () => []
-  }
+  },
+  
 })
 
- function abrirPdf(id){
-  router.push({ name:'reader', params: { id } })
+function abrirPdf(id){
+  console.log(id)
+  router.push({ name:'reader', query: { key: id } })
 }
 
 </script>
@@ -52,10 +53,13 @@ const props = defineProps({
 .table-container {
   width: 100vw;
   margin-top: 2rem;
+  display: flex;
+  justify-content: end;
 }
 
 .pdf-table {
-  width: 100%;
+  width: 75%;
+  margin-right: 1rem;
   border-collapse: collapse;
 }
 

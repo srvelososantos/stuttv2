@@ -4,9 +4,10 @@ import { BookController } from './book.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Book } from './entities/book.entity';
 import { User } from 'src/user/entities/user.entity';
+import { S3Module } from 'src/s3/s3e.module';
 
 @Module({
-  imports: [ TypeOrmModule.forFeature([Book, User]) ],
+  imports: [ TypeOrmModule.forFeature([Book, User]), S3Module],
   controllers: [BookController],
   providers: [BookService],
 })

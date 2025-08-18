@@ -1,14 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Req, UseGuards, Query } from '@nestjs/common';
 import { BookService } from './book.service';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { S3Service } from 'src/s3/s3.service';
 
 @UseGuards(AuthGuard)
 @Controller('book')
 export class BookController {
-  constructor(private readonly bookService: BookService) {}
+  constructor(private readonly bookService: BookService, private readonly s3Service: S3Service) {}
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
@@ -22,9 +23,14 @@ export class BookController {
     
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.bookService.findOne(+id);
+  @Get('read')
+  async findOne(@Query('key') key: string) {
+    if (!key) {
+      return { error: 'Missing key' };
+    }
+
+    const url = await this.s3Service.getSignedUrl(key);
+    return { url };
   }
   
   @Patch(':id')
