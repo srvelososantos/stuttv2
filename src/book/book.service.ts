@@ -63,6 +63,7 @@ export class BookService {
         filename: true,
         progress: true,
         user: true,
+        key: true
       } 
     })
   }

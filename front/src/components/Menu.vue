@@ -52,7 +52,10 @@ export default {
         label: "Log Out",
         icon: "logout",
       },
-      
+      {
+        
+        icon: "account_circle"
+      }
     ]
   }),
   components: {
@@ -85,7 +88,7 @@ export default {
               })
 
               console.log('Arquivo enviado com chave:', res.data.key);
-              alert('Upload concluído com sucesso!')
+              alert('Upload done successfully, it will be available soon')
               window.location.reload()
             } catch (err) {
               console.error('Erro no upload', err)
@@ -104,6 +107,8 @@ export default {
       
       
     }
+
+    
 
     return {
       handleMenuClick

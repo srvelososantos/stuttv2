@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="pdf in pdfs" :key="pdf.id" @click="abrirPdf(pdf)">
+                <tr v-for="pdf in pdfs" :key="pdf.id" @click="abrirPdf(pdf.key)">
                     <td>{{ pdf.title }}</td>
                     <td>{{ pdf.progress }} %</td>
                     <td>{{ pdf.author }}</td>
