@@ -18,4 +18,12 @@ export class AuthController{
         return { valid: true }
     }
 
+    @UseGuards(AuthGuard)
+    @Get('me')
+    async me(@Body() body: { token: string }){
+        const res = await this.authService.me(body.token);
+        
+        return res
+    }
+
 }

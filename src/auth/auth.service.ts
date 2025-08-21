@@ -3,6 +3,7 @@ import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { User } from 'src/user/entities/user.entity';
+import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthService {
@@ -23,5 +24,18 @@ export class AuthService {
   async login(user: any) {
     const payload = { username: user.name, sub: user.id, email: user.email, type: user.type };
     return { access_token: this.jwtService.sign(payload) };
+  }
+
+  async me(token: string){
+    const secret = 'teste';
+
+    try {
+      // decodifica e valida a assinatura
+      const payload = jwt.verify(token, secret);
+      return payload;
+      // exemplo: { sub: '123', email: 'teste@exemplo.com', iat: 1692871, exp: 1692981 }
+    } catch (err) {
+      console.error('Token inválido ou expirado', err);
+    }
   }
 }

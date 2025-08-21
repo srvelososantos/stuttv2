@@ -53,7 +53,7 @@ export default {
         icon: "logout",
       },
       {
-        
+        label: "",
         icon: "account_circle"
       }
     ]
@@ -64,7 +64,7 @@ export default {
   setup() {
     const router = useRouter()
 
-    const handleMenuClick = (label) => {
+    const handleMenuClick = async (label) => {
       if (label === 'Log Out') {
         localStorage.removeItem('token')        // Remove token JWT
         router.push('/login')                   // Redireciona
@@ -104,7 +104,13 @@ export default {
       if(label === 'Home'){
         router.push('/home')
       }
-      
+      if(label === ''){
+        
+        const res = axios.get('http://localhost:3000/auth/me', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+        console.log(res.data.name)
+        
+        
+      }
       
     }
 
