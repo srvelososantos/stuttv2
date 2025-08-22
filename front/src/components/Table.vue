@@ -29,6 +29,10 @@
 
 <script setup>
 
+function teste(t){
+  console.log('kkk')
+}
+
 import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 const router = useRouter()

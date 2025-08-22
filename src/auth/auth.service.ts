@@ -26,16 +26,4 @@ export class AuthService {
     return { access_token: this.jwtService.sign(payload) };
   }
 
-  async me(token: string){
-    const secret = 'teste';
-
-    try {
-      // decodifica e valida a assinatura
-      const payload = jwt.verify(token, secret);
-      return payload;
-      // exemplo: { sub: '123', email: 'teste@exemplo.com', iat: 1692871, exp: 1692981 }
-    } catch (err) {
-      console.error('Token inválido ou expirado', err);
-    }
-  }
 }

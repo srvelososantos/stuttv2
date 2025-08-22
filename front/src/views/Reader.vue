@@ -25,5 +25,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  <iframe v-if="pdfUrl" :src="pdfUrl" width="100%" height="600px"></iframe>
+  
+  <iframe v-if="pdfUrl" :src="pdfUrl"  style="border: none; width: 100%; height: 100vh;"></iframe>
 </template>

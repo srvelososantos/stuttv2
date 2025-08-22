@@ -8,6 +8,7 @@
       :icon="item.icon"
       :depth="0"
       :smallMenu="smallMenu"
+      :class="item.class"
       @menu-click="handleMenuClick"
     />
     <!-- <i @click="smallMenu = !smallMenu" class="material-icons">menu</i> -->
@@ -24,6 +25,7 @@ export default {
   name: 'recursive-menu',
   data: () => ({
     smallMenu: false,
+    username: '',
     menuTree: [
       {
         label: "Home",
@@ -54,7 +56,8 @@ export default {
       },
       {
         label: "",
-        icon: "account_circle"
+        icon: "account_circle",
+        class: "userMenuItem"
       }
     ]
   }),
@@ -104,20 +107,23 @@ export default {
       if(label === 'Home'){
         router.push('/home')
       }
-      if(label === ''){
-        
-        const res = axios.get('http://localhost:3000/auth/me', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
-        console.log(res.data.name)
-        
-        
-      }
+      
       
     }
 
-    
-
     return {
       handleMenuClick
+    }
+  },
+  async mounted() {
+    try{
+      const res = await axios.get('http://localhost:3000/auth/me', { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } })
+      this.username = res.data.username
+
+      const accountItem = this.menuTree.find(item => item.icon === 'account_circle')
+      if(accountItem){ accountItem.label = this.username }
+    }catch(e){
+      console.error('erro ao buscar usuario: ', e)
     }
   }
 }
@@ -149,6 +155,16 @@ export default {
     i {
       left: 20px;
     }
+  }
+}
+
+.userMenuItem{
+  margin-top: 42rem;
+}
+
+@media only screen and (max-width: 1360px){
+  .userMenuItem{
+    margin-top: 23rem;
   }
 }
 </style>
