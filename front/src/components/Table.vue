@@ -8,14 +8,16 @@
                     <th>Progress</th>
                     <th>Author</th>
                     <th>Voice</th>
+                    <th>Audio</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="pdf in pdfs" :key="pdf.id" @click="abrirPdf(pdf.key)">
-                    <td>{{ pdf.title }}</td>
+                <tr v-for="pdf in pdfs" :key="pdf.id" >
+                    <td @click="abrirPdf(pdf.key)" style="cursor: pointer;">{{ pdf.title }}</td>
                     <td>{{ pdf.progress }} %</td>
                     <td>{{ pdf.author }}</td>
                     <td>{{ pdf.voice }}</td>
+                    <td><button @click="audioOpener">🔊</button></td>
                 </tr>
             </tbody>
         </table>
@@ -29,9 +31,6 @@
 
 <script setup>
 
-function teste(t){
-  console.log('kkk')
-}
 
 import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
@@ -46,6 +45,10 @@ const props = defineProps({
   
 })
 
+function audioOpener(){
+  router.push({ name: 'player' })
+}
+
 function abrirPdf(id){
   console.log(id)
   router.push({ name:'reader', query: { key: id } })
@@ -53,7 +56,7 @@ function abrirPdf(id){
 
 </script>
 
-<style>
+<style scoped>
 .table-container {
   width: 100vw;
   margin-top: 2rem;
@@ -73,14 +76,16 @@ function abrirPdf(id){
   text-align: left;
 } 
 
-td{
-  cursor: pointer;
-}
+
 
 .sem-dados {
   text-align: center;
   color: gray;
   margin-top: 1rem;
   font-style: italic;
+}
+
+button{
+
 }
 </style>

@@ -162,7 +162,7 @@ export default {
   margin-top: 42rem;
 }
 
-@media only screen and (max-width: 1360px){
+@media only screen and (max-width: 1370px){
   .userMenuItem{
     margin-top: 23rem;
   }
